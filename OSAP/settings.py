@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-mst^e)#&&*lk^g#8+3zti5cm1nxuz9%(b88#^7x$swf01pla1j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -139,6 +139,6 @@ DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
     'SERIALIZERS': {
         'user_create': 'access.serializers.UserCreateSerializer',
-        'user': 'access.serializers.UserCreateSerializers',
+        'user': 'access.serializers.UserCreateSerializer',
     },
 }
