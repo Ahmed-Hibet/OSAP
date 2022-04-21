@@ -1,8 +1,10 @@
 from django.urls import path
 from .views import (
-    EducationLevelCreate, EducationLevelDetail, 
-    OccupationCreate, OccupationDetail
-    )
+    EducationLevelCreate, 
+    EducationLevelDetail, 
+    OccupationCreate, 
+    OccupationDetail
+)
 
 
 urlpatterns = [

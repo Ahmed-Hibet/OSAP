@@ -23,4 +23,5 @@ urlpatterns = [
     re_path(r'^auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
     path('', include('access.urls')),
+    path('surveys/', include('survey.urls')),
 ]
