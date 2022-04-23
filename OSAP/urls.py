@@ -15,13 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from access.views import RespondentCreate
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/users/', RespondentCreate.as_view()), # to be update
+    path('', include('access.urls')),
     re_path(r'^auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
-    path('', include('access.urls')),
     path('surveys/', include('survey.urls')),
 ]

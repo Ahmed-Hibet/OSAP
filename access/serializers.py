@@ -4,15 +4,38 @@ from rest_framework import serializers
 from access.models import User, EducationLevel, Occupation
 
 class UserCreateSerializer(UserCreateSerializer):
+    roll = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='roll_name'
+    )
     class Meta(UserCreateSerializer.Meta):
         model = User
-        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'password']
+        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'password', 'roll']
 
 
-class RespondentSerializer(serializers.ModelSerializer):
-    class Meta:
+class RespondentSerializer(UserCreateSerializer):
+    roll = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='roll_name'
+    )
+    class Meta(UserCreateSerializer.Meta):
         model = User
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'gender', 'birth_date', 'region', 'city', 'phone_number', 'education_level', 'occupation', 'password']
+        fields = [
+            'id', 
+            'username', 
+            'first_name', 
+            'last_name', 
+            'email', 
+            'gender', 
+            'birth_date', 
+            'region', 
+            'city', 
+            'phone_number', 
+            'education_level', 
+            'occupation', 
+            'password',
+            'roll',
+        ]
 
 
 class EducationLevelSerializer(serializers.ModelSerializer):

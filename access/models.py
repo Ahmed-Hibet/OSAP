@@ -63,7 +63,7 @@ class UserManager(BaseUserManager):
 '''
 
 class Occupation(models.Model):
-    work_type = models.CharField(max_length=100)
+    work_type = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -71,7 +71,7 @@ class Occupation(models.Model):
 
 
 class EducationLevel(models.Model):
-    level_name = models.CharField(max_length=50)
+    level_name = models.CharField(max_length=50, unique=True)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -79,7 +79,7 @@ class EducationLevel(models.Model):
 
 
 class Roll(models.Model):
-    roll_name = models.CharField(max_length=50)
+    roll_name = models.CharField(max_length=50, unique=True)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
