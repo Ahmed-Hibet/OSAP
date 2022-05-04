@@ -63,7 +63,7 @@ class UserManager(BaseUserManager):
 '''
 
 class Occupation(models.Model):
-    work_type = models.CharField(max_length=100, unique=True)
+    work_type = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -71,7 +71,7 @@ class Occupation(models.Model):
 
 
 class EducationLevel(models.Model):
-    level_name = models.CharField(max_length=50, unique=True)
+    level_name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
