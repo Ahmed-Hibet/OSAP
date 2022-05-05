@@ -72,3 +72,8 @@ class SurveyRequirement(models.Model):
 class Report(models.Model):
     survey = models.ForeignKey(Survey, related_name='reports', on_delete=models.CASCADE)
     message = models.TextField()
+
+
+class RespondentHistory(models.Model):
+    respondent = models.ForeignKey("access.User", related_name="survey_history", on_delete=models.CASCADE)
+    survey = models.ForeignKey(Survey, related_name="survey_history", on_delete=models.CASCADE)

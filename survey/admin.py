@@ -7,6 +7,7 @@ from .models import (
     Choice, Response,
     SurveyRequirement,
     Report,
+    RespondentHistory,
 )
 # Register your models here.
 admin.site.register(Survey)
@@ -16,3 +17,4 @@ admin.site.register(Questionnaire)
 admin.site.register(Choice)
 admin.site.register(SurveyRequirement)
 admin.site.register(Report)
+admin.site.register(RespondentHistory)
