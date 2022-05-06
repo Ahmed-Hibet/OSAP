@@ -36,6 +36,7 @@ class Questionnaire(models.Model):
     description = models.TextField(blank=True, null=True)
     section = models.ForeignKey(Section, related_name='questionnaires', on_delete=models.CASCADE)
     questionnaire_type = models.ForeignKey(QuestionnaireType, related_name='questionnaires', on_delete=models.PROTECT)
+    maximum_choice = models.PositiveIntegerField(default=1, blank=True, null=True)
     has_dependency = models.BooleanField(default=False, help_text="Check whether next section can be determined depend upon this question")
     is_required = models.BooleanField(default=True)
 
