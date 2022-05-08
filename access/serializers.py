@@ -35,6 +35,7 @@ class RespondentSerializer(UserCreateSerializer):
             'occupation', 
             'password',
             'roll',
+            'balance',
         ]
 
 

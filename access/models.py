@@ -116,6 +116,7 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     roll = models.ForeignKey(Roll, on_delete=models.PROTECT, blank=True, null=True)
     is_verified = models.BooleanField(default=True)
+    balance = models.PositiveIntegerField(default=0)
 
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
     USERNAME_FIELD = 'email'
