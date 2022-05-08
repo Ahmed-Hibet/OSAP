@@ -56,7 +56,9 @@ class Choice(models.Model):
 
 class Response(models.Model):
     questionnaire = models.ForeignKey(Questionnaire, related_name='responses', on_delete=models.CASCADE)
-    response = models.TextField()
+    response_text = models.TextField(blank=True, null=True)
+    response_date = models.DateField(blank=True, null=True)
+    response_time = models.TimeField(blank=True, null=True)
 
 
 class SurveyRequirement(models.Model):

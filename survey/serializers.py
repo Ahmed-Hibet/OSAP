@@ -5,7 +5,9 @@ from .models import (
     Questionnaire, 
     QuestionnaireType, 
     Choice, 
-    SurveyRequirement
+    SurveyRequirement,
+    Response,
+    RespondentHistory,
 )
 from access.models import User, Occupation, EducationLevel
 from access.serializers import EducationLevelSerializer, OccupationSerializer
@@ -142,3 +144,87 @@ class SurveySerializer(serializers.ModelSerializer):
 
         return survey
  
+ 
+class ResponseSerializer(serializers.Serializer):
+    questionnaire_id = serializers.IntegerField(min_value=1)
+    response_choice = ChoiceSerializer(many=True)
+    response_date = serializers.DateField(required=False, allow_null=True)
+    response_time = serializers.TimeField(required=False, allow_null=True)
+    response_text = serializers.CharField(required=False, allow_null=True)
+
+
+class SurveyFillSerializer(serializers.Serializer):
+    survey_id = serializers.IntegerField(min_value=1)
+    responses = ResponseSerializer(many=True)
+
+    def validate_responses(self, responses):
+        for response in responses:
+            questionnaire = get_object_or_404(Questionnaire, pk=response['questionnaire_id'])
+            questionnaire_type = questionnaire.questionnaire_type.type_name
+            if questionnaire_type == 'Check box' or questionnaire_type == 'Drop down':
+                if questionnaire.maximum_choice < len(response['response_choice']):
+                    raise serializers.ValidationError("response exceed the maximum limit")
+            if questionnaire_type == 'Multiple choice':
+                if len(response['response_choice']) > 1:
+                    raise serializers.ValidationError("Only one choice is allowed")
+        return responses
+
+    def create(self, validated_data):
+        survey = get_object_or_404(Survey, pk=validated_data['survey_id'])
+        for response in validated_data['responses']:
+            questionnaire = get_object_or_404(Questionnaire, pk=response['questionnaire_id'])
+            questionnaire_type = questionnaire.questionnaire_type.type_name
+            if questionnaire_type == 'Check box' or questionnaire_type == 'Drop down':
+                for choice in response['response_choice']:
+                    choice = Choice.objects.filter(questionnaire=questionnaire, name=choice["name"]).first()
+                    choice.total_selected += 1
+                    choice.save()
+                
+            elif questionnaire_type == 'Multiple choice':
+                if response['response_choice']:
+                    choice_obj = response['response_choice'][0]
+                    choice = Choice.objects.filter(questionnaire=questionnaire, name=choice_obj["name"]).first()
+                    choice.total_selected += 1
+                    choice.save()
+
+            elif questionnaire_type == 'Date':
+                if response['response_date']:
+                    response_obj = Response.objects.create(
+                        questionnaire=questionnaire, 
+                        response_date=response['response_date']
+                    )
+            elif questionnaire_type == 'Time':
+                if response['response_time']:
+                    response_obj = Response.objects.create(
+                        questionnaire=questionnaire, 
+                        response_time=response['response_date']
+                    )
+
+            else:
+                if response['response_text']:
+                    response_obj = Response.objects.create(
+                        questionnaire=questionnaire, 
+                        response_text=response['response_date']
+                    )
+        """
+        Increase number of respondent for this survey and clear the
+        is_active flag if it reaches the maximum limit
+        """
+        survey.number_of_response += 1
+        if survey.number_of_response >= survey.required_number_of_respondent:
+            survey.is_active = False
+        survey.save()
+
+        """
+        Create a respondent history       
+        """
+        user = User.objects.get(pk=validated_data['respondent'].id)
+        respondent_history = RespondentHistory.objects.create(
+            respondent=user, 
+            survey=survey
+        )
+
+        if survey.is_paid:
+            user.balance += survey.budget//survey.required_number_of_respondent
+            user.save()
+        return validated_data
