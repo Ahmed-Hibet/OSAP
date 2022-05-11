@@ -63,7 +63,7 @@ class UserManager(BaseUserManager):
 '''
 
 class Occupation(models.Model):
-    work_type = models.CharField(max_length=100, unique=True)
+    work_type = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -71,7 +71,7 @@ class Occupation(models.Model):
 
 
 class EducationLevel(models.Model):
-    level_name = models.CharField(max_length=50, unique=True)
+    level_name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -116,6 +116,7 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     roll = models.ForeignKey(Roll, on_delete=models.PROTECT, blank=True, null=True)
     is_verified = models.BooleanField(default=True)
+    balance = models.PositiveIntegerField(default=0)
 
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
     USERNAME_FIELD = 'email'

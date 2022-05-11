@@ -36,6 +36,7 @@ class Questionnaire(models.Model):
     description = models.TextField(blank=True, null=True)
     section = models.ForeignKey(Section, related_name='questionnaires', on_delete=models.CASCADE)
     questionnaire_type = models.ForeignKey(QuestionnaireType, related_name='questionnaires', on_delete=models.PROTECT)
+    maximum_choice = models.PositiveIntegerField(default=1, blank=True, null=True)
     has_dependency = models.BooleanField(default=False, help_text="Check whether next section can be determined depend upon this question")
     is_required = models.BooleanField(default=True)
 
@@ -55,7 +56,9 @@ class Choice(models.Model):
 
 class Response(models.Model):
     questionnaire = models.ForeignKey(Questionnaire, related_name='responses', on_delete=models.CASCADE)
-    response = models.TextField()
+    response_text = models.TextField(blank=True, null=True)
+    response_date = models.DateField(blank=True, null=True)
+    response_time = models.TimeField(blank=True, null=True)
 
 
 class SurveyRequirement(models.Model):
@@ -72,3 +75,8 @@ class SurveyRequirement(models.Model):
 class Report(models.Model):
     survey = models.ForeignKey(Survey, related_name='reports', on_delete=models.CASCADE)
     message = models.TextField()
+
+
+class RespondentHistory(models.Model):
+    respondent = models.ForeignKey("access.User", related_name="survey_history", on_delete=models.CASCADE)
+    survey = models.ForeignKey(Survey, related_name="survey_history", on_delete=models.CASCADE)
