@@ -37,6 +37,10 @@ class Questionnaire(models.Model):
     section = models.ForeignKey(Section, related_name='questionnaires', on_delete=models.CASCADE)
     questionnaire_type = models.ForeignKey(QuestionnaireType, related_name='questionnaires', on_delete=models.PROTECT)
     maximum_choice = models.PositiveIntegerField(default=1, blank=True, null=True)
+    minimum_integer_value = models.IntegerField(blank=True, null=True, help_text="only for questionnaire type of integer")
+    maximum_integer_value = models.IntegerField(blank=True, null=True, help_text="only for questionnaire type of integer")
+    minimum_decimal_value = models.FloatField(blank=True, null=True, help_text="only for questionnaire type of decimal")
+    maximum_decimal_value = models.FloatField(blank=True, null=True, help_text="only for questionnaire type of decimal")
     has_dependency = models.BooleanField(default=False, help_text="Check whether next section can be determined depend upon this question")
     is_required = models.BooleanField(default=True)
 
@@ -59,6 +63,8 @@ class Response(models.Model):
     response_text = models.TextField(blank=True, null=True)
     response_date = models.DateField(blank=True, null=True)
     response_time = models.TimeField(blank=True, null=True)
+    response_integer = models.IntegerField(blank=True, null=True)
+    response_decimal = models.FloatField(blank=True, null=True)
 
 
 class SurveyRequirement(models.Model):

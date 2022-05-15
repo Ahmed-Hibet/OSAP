@@ -151,6 +151,8 @@ class ResponseSerializer(serializers.Serializer):
     response_date = serializers.DateField(required=False, allow_null=True)
     response_time = serializers.TimeField(required=False, allow_null=True)
     response_text = serializers.CharField(required=False, allow_null=True)
+    response_integer = serializers.IntegerField(required=False, allow_null=True)
+    response_decimal = serializers.FloatField(required=False, allow_null=True)
 
 
 class SurveyFillSerializer(serializers.Serializer):
@@ -167,6 +169,16 @@ class SurveyFillSerializer(serializers.Serializer):
             if questionnaire_type == 'Multiple choice':
                 if len(response['response_choice']) > 1:
                     raise serializers.ValidationError("Only one choice is allowed")
+            if questionnaire_type == 'Integer':
+                if not(
+                    questionnaire.minimum_integer_value <= response['response_integer'] and 
+                    response['response_integer'] <= questionnaire.maximum_integer_value):
+                        raise serializers.ValidationError("the number is out of range")
+            if questionnaire_type == 'Decimal':
+                if not(
+                    questionnaire.minimum_decimal_value <= response['response_decimal'] and 
+                    response['response_decimal'] <= questionnaire.maximum_decimal_value):
+                        raise serializers.ValidationError("the number is out of range")                
         return responses
 
     def create(self, validated_data):
@@ -197,14 +209,25 @@ class SurveyFillSerializer(serializers.Serializer):
                 if response['response_time']:
                     response_obj = Response.objects.create(
                         questionnaire=questionnaire, 
-                        response_time=response['response_date']
+                        response_time=response['response_time']
                     )
-
+            elif questionnaire_type == 'Integer':
+                if response['response_integer']:
+                    response_obj = Response.objects.create(
+                        questionnaire=questionnaire, 
+                        response_integer=response['response_integer']
+                    )
+            elif questionnaire_type == 'Decimal':
+                if response['response_decimal']:
+                    response_obj = Response.objects.create(
+                        questionnaire=questionnaire, 
+                        response_decimal=response['response_decimal']
+                    )
             else:
                 if response['response_text']:
                     response_obj = Response.objects.create(
                         questionnaire=questionnaire, 
-                        response_text=response['response_date']
+                        response_text=response['response_text']
                     )
         """
         Increase number of respondent for this survey and clear the
