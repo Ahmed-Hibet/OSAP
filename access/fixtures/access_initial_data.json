@@ -1,0 +1,135 @@
+[
+    {
+        "model": "access.Roll",
+        "pk": 1,
+        "fields": {
+            "roll_name": "Admin"
+        }
+    },
+    {
+        "model": "access.Roll",
+        "pk": 2,
+        "fields": {
+            "roll_name": "Researcher"
+        }
+    },
+    {
+        "model": "access.Roll",
+        "pk": 3,
+        "fields": {
+            "roll_name": "Respondent"
+        }
+    },
+    {
+        "model": "access.EducationLevel",
+        "pk": 1,
+        "fields": {
+            "level_name": "None",
+            "description": "Who does not go to school ever"
+        }
+    },
+    {
+        "model": "access.EducationLevel",
+        "pk": 2,
+        "fields": {
+            "level_name": "Primary School",
+            "description": "From grade 1 to 8"
+        }
+    },
+    {
+        "model": "access.EducationLevel",
+        "pk": 3,
+        "fields": {
+            "level_name": "Secondary School",
+            "description": "Grade 9 and 10"
+        }
+    },
+    {
+        "model": "access.EducationLevel",
+        "pk": 4,
+        "fields": {
+            "level_name": "Preparatory School",
+            "description": "Grade 11 and 12"
+        }
+    },
+    {
+        "model": "access.EducationLevel",
+        "pk": 5,
+        "fields": {
+            "level_name": "Diploma",
+            "description": ""
+        }
+    },
+    {
+        "model": "access.EducationLevel",
+        "pk": 6,
+        "fields": {
+            "level_name": "Bachelor's degree",
+            "description": ""
+        }
+    },
+    {
+        "model": "access.EducationLevel",
+        "pk": 7,
+        "fields": {
+            "level_name": "Master's degree",
+            "description": ""
+        }
+    },
+    {
+        "model": "access.EducationLevel",
+        "pk": 8,
+        "fields": {
+            "level_name": "Doctoral degree",
+            "description": ""
+        }
+    },
+    {
+        "model": "access.Occupation",
+        "pk": 1,
+        "fields": {
+            "work_type": "None",
+            "description": ""
+        }
+    },
+    {
+        "model": "access.Occupation",
+        "pk": 2,
+        "fields": {
+            "work_type": "Student",
+            "description": ""
+        }
+    },
+    {
+        "model": "access.Occupation",
+        "pk": 3,
+        "fields": {
+            "work_type": "Nurse",
+            "description": ""
+        }
+    },
+    {
+        "model": "access.Occupation",
+        "pk": 4,
+        "fields": {
+            "work_type": "Doctor",
+            "description": ""
+        }
+    },
+    {
+        "model": "access.Occupation",
+        "pk": 5,
+        "fields": {
+            "work_type": "Merchant",
+            "description": ""
+        }
+    },
+    {
+        "model": "access.Occupation",
+        "pk": 6,
+        "fields": {
+            "work_type": "Employee",
+            "description": ""
+        }
+    }
+]

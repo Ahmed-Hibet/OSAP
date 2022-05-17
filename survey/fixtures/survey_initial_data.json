@@ -1,0 +1,65 @@
+[
+    {
+        "model": "survey.QuestionnaireType",
+        "pk": 1,
+        "fields": {
+            "type_name": "Multiple choice"
+        }
+    },
+    {
+        "model": "survey.QuestionnaireType",
+        "pk": 2,
+        "fields": {
+            "type_name": "Drop down"
+        }
+    },
+    {
+        "model": "survey.QuestionnaireType",
+        "pk": 3,
+        "fields": {
+            "type_name": "Check box"
+        }
+    },
+    {
+        "model": "survey.QuestionnaireType",
+        "pk": 4,
+        "fields": {
+            "type_name": "Integer"
+        }
+    },
+    {
+        "model": "survey.QuestionnaireType",
+        "pk": 5,
+        "fields": {
+            "type_name": "Decimal"
+        }
+    },
+    {
+        "model": "survey.QuestionnaireType",
+        "pk": 6,
+        "fields": {
+            "type_name": "Date"
+        }
+    },
+    {
+        "model": "survey.QuestionnaireType",
+        "pk": 7,
+        "fields": {
+            "type_name": "Time"
+        }
+    },
+    {
+        "model": "survey.QuestionnaireType",
+        "pk": 8,
+        "fields": {
+            "type_name": "Short answer"
+        }
+    },
+    {
+        "model": "survey.QuestionnaireType",
+        "pk": 9,
+        "fields": {
+            "type_name": "Paragraph"
+        }
+    }
+]
