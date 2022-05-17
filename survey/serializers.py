@@ -34,8 +34,18 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
     class Meta:
         model = Questionnaire
         fields = [
-            'id', 'title', 'description', 'has_dependency', 'is_required',
-            'questionnaire_type', 'choices', 'maximum_choice',
+            'id', 
+            'title', 
+            'description', 
+            'has_dependency', 
+            'is_required',
+            'questionnaire_type', 
+            'choices', 
+            'maximum_choice',
+            'minimum_integer_value',
+            'maximum_integer_value',
+            'minimum_decimal_value',
+            'maximum_decimal_value',
         ]
         # depth=1
 
