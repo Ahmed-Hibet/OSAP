@@ -10,7 +10,6 @@ from .serializers import (
     SurveySerializer, 
     SurveyFillSerializer, 
     QuestionnaireTypeSerializer,
-    SurveyAnalyseSerializer,
     ChoiceResponseSerializer
 )
 from .permissions import IsRespondent, IsAdminOrReadOnly
