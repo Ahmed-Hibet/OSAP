@@ -261,3 +261,9 @@ class SurveyFillSerializer(serializers.Serializer):
             user.balance += survey.budget//survey.required_number_of_respondent
             user.save()
         return validated_data
+
+
+class ChoiceResponseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Choice
+        fields = ['id', 'name', 'total_selected']
