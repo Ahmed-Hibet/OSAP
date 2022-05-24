@@ -5,6 +5,8 @@ from .views import (
     QuestionnaireTypeCreate, 
     QuestionnaireTypeDetail,
     SurveyAnalyse,
+    SurveyReportCreate,
+    SurveyReportDetail,
 )
 
 urlpatterns = [
@@ -13,4 +15,6 @@ urlpatterns = [
     path('questionnaire-types/', QuestionnaireTypeCreate.as_view()),
     path('questionnaire-types/<int:pk>/', QuestionnaireTypeDetail.as_view()),
     path('analyses/<int:survey_id>/', SurveyAnalyse.as_view()),
+    path('reports/', SurveyReportCreate.as_view()),
+    path('reports/<int:pk>/', SurveyReportDetail.as_view()),
 ]

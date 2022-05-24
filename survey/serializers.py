@@ -8,6 +8,7 @@ from .models import (
     SurveyRequirement,
     Response,
     RespondentHistory,
+    Report,
 )
 from access.models import User, Occupation, EducationLevel
 from access.serializers import EducationLevelSerializer, OccupationSerializer
@@ -294,3 +295,9 @@ class ChoiceResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choice
         fields = ['id', 'name', 'total_selected']
+
+
+class SurveyReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Report
+        fields = ['id', 'survey', 'message']

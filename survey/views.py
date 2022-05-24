@@ -2,17 +2,27 @@ from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import (
+    IsAuthenticated, 
+    IsAuthenticatedOrReadOnly, 
+    IsAuthenticated,
+    IsAdminUser,
+)
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Survey, RespondentHistory, QuestionnaireType
+from .models import Survey, RespondentHistory, QuestionnaireType, Report
 from .serializers import (
     SurveySerializer, 
     SurveyFillSerializer, 
     QuestionnaireTypeSerializer,
-    ChoiceResponseSerializer
+    ChoiceResponseSerializer,
+    SurveyReportSerializer,
 )
-from .permissions import IsRespondent, IsAdminOrReadOnly
+from .permissions import (
+    IsRespondent, 
+    IsAdminOrReadOnly, 
+    IsRespondentWriteOrAdminReadOnly,
+)
 import datetime
 from django.db.models import Q
 
@@ -143,3 +153,15 @@ class SurveyAnalyse(APIView):
         survey_result['questionnaires'] = questionnaires
 
         return Response(survey_result, status=status.HTTP_200_OK)
+
+
+class SurveyReportCreate(generics.ListCreateAPIView):
+    queryset = Report.objects.all()
+    serializer_class = SurveyReportSerializer
+    permission_classes = [IsAuthenticated, IsRespondentWriteOrAdminReadOnly]
+
+
+class SurveyReportDetail(generics.RetrieveDestroyAPIView):
+    queryset = Report.objects.all()
+    serializer_class = SurveyReportSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
