@@ -80,6 +80,7 @@ class SurveySerializer(serializers.ModelSerializer):
     owner = UserCreateSerializer(read_only=True)
     sections = SectionSerializer(many=True)
     requirements = SurveyRequirementSerializer()
+
     class Meta:
         model = Survey
         fields = [
@@ -88,6 +89,18 @@ class SurveySerializer(serializers.ModelSerializer):
             'sections', 'requirements'
         ]
         # depth = 2
+    
+    def validate(self, data):
+        is_paid = data['is_paid']
+        budget = data['budget']
+        required_number_of_respondent = data['required_number_of_respondent']
+        # balance = self.request.user.balance
+        
+        if is_paid and budget < required_number_of_respondent:
+            raise serializers.ValidationError("the minimum budget must be greater than or equal to required_number_of_respondent")
+        # if balance < budget:
+        #     raise serializers.ValidationError("you have insufficient balance please recharge your wallet!")
+        return data
 
     def create_questionnaires(self, questionnaires, section):
         for questionnaire in questionnaires:
@@ -145,13 +158,27 @@ class SurveySerializer(serializers.ModelSerializer):
         return survey
 
     def create(self, validated_data):
+        """
+        checking user's wallet if it has sufficient amount to create this survey
+        """
+        user = User.objects.filter(email=validated_data['owner']).first()
+        message = {
+            'balance': 'you have insufficient balance please recharge your wallet!'
+        }
+        if user.balance < validated_data['budget']:
+            raise serializers.ValidationError(message)
+        
+        """
+        Survey creation start
+        """
         sections = validated_data.pop('sections')
         requirements = validated_data.pop('requirements')
         survey = Survey.objects.create(**validated_data)
 
         survey = self.create_sections(sections, survey)
         survey = self.create_requirement(requirements, survey)
-
+        user.balance -= validated_data['budget']
+        user.save()
         return survey
  
  
