@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (
     SurveyCreate, 
+    SurveyDetail,
     SurveyFill, 
     QuestionnaireTypeCreate, 
     QuestionnaireTypeDetail,
@@ -11,6 +12,7 @@ from .views import (
 
 urlpatterns = [
     path('', SurveyCreate.as_view()),
+    path('<int:pk>/', SurveyDetail.as_view()),
     path('fill/', SurveyFill.as_view()),
     path('questionnaire-types/', QuestionnaireTypeCreate.as_view()),
     path('questionnaire-types/<int:pk>/', QuestionnaireTypeDetail.as_view()),
