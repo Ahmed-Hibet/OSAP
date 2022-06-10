@@ -23,6 +23,9 @@ class Section(models.Model):
     order = models.IntegerField(help_text="Order of this section of the survey relative to other section. Lowest order number indicates the first section.")
     survey = models.ForeignKey(Survey, related_name='sections', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 
 class QuestionnaireType(models.Model):
     type_name = models.CharField(max_length=50)
@@ -66,6 +69,9 @@ class Response(models.Model):
     response_integer = models.IntegerField(blank=True, null=True)
     response_decimal = models.FloatField(blank=True, null=True)
 
+    def __str__(self):
+        return self.questionnaire.title
+
 
 class SurveyRequirement(models.Model):
     GENDER = [('Both', 'Both'), ('M', 'Male'), ('F', 'Female')]
@@ -77,12 +83,21 @@ class SurveyRequirement(models.Model):
     gender = models.CharField(choices=GENDER, max_length=5)
     allow_unverified_respondents = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.survey.title
+    
 
 class Report(models.Model):
     survey = models.ForeignKey(Survey, related_name='reports', on_delete=models.CASCADE)
     message = models.TextField()
 
+    def __str__(self):
+        return self.survey.title
+
 
 class RespondentHistory(models.Model):
     respondent = models.ForeignKey("access.User", related_name="survey_history", on_delete=models.CASCADE)
     survey = models.ForeignKey(Survey, related_name="survey_history", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.respondent.username + ": " + self.survey.title
