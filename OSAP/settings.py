@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'access',
     'survey',
     'chat',
+    'payment',
 ]
 
 MIDDLEWARE = [
