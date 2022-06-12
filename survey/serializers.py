@@ -208,14 +208,26 @@ class SurveyFillSerializer(serializers.Serializer):
                 if len(response['response_choice']) > 1:
                     raise serializers.ValidationError("Only one choice is allowed")
             if questionnaire_type == 'Integer':
+                minimum_integer_value = questionnaire.minimum_integer_value
+                maximum_integer_value = questionnaire.maximum_integer_value
+                if not minimum_integer_value:
+                    minimum_integer_value = response['response_integer']
+                if not maximum_integer_value:
+                    maximum_integer_value = response['response_integer']
                 if not(
-                    questionnaire.minimum_integer_value <= response['response_integer'] and 
-                    response['response_integer'] <= questionnaire.maximum_integer_value):
+                    minimum_integer_value <= response['response_integer'] and 
+                    response['response_integer'] <= maximum_integer_value):
                         raise serializers.ValidationError("the number is out of range")
             if questionnaire_type == 'Decimal':
+                minimum_decimal_value = questionnaire.minimum_decimal_value
+                maximum_decimal_value = questionnaire.maximum_decimal_value
+                if not minimum_decimal_value:
+                    minimum_decimal_value = response['response_decimal']
+                if not maximum_decimal_value:
+                    maximum_decimal_value = response['response_decimal']
                 if not(
-                    questionnaire.minimum_decimal_value <= response['response_decimal'] and 
-                    response['response_decimal'] <= questionnaire.maximum_decimal_value):
+                    minimum_decimal_value <= response['response_decimal'] and 
+                    response['response_decimal'] <= maximum_decimal_value):
                         raise serializers.ValidationError("the number is out of range")                
         return responses
 
