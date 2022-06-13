@@ -39,6 +39,12 @@ class RespondentSerializer(UserCreateSerializer):
         ]
 
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'birth_date', 'education_level', 'occupation']
+
+
 class EducationLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = EducationLevel

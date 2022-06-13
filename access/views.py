@@ -3,6 +3,7 @@ from access.serializers import (
     EducationLevelSerializer, 
     OccupationSerializer,
     UserCreateSerializer,
+    ProfileSerializer,
 )
 from access.models import User, EducationLevel, Occupation
 from rest_framework import generics
@@ -68,3 +69,8 @@ class OccupationCreate(generics.ListCreateAPIView):
 class OccupationDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Occupation.objects.all()
     serializer_class = OccupationSerializer
+
+
+class UpdateProfile(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = ProfileSerializer
