@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 
 URL = "http://167.172.141.137/"
 
-WALLET_APP_KEY = "PG_test_7aa29079-8567-4346-afb1-07c53dc4c623"
+WALLET_APP_KEY = "PG_test_d0d7faeb-06ba-4fde-bb85-c3b4b4ac62cb"
 
 SUCCESS_URL = URL + "payment/success/"
 

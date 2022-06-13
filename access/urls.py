@@ -7,6 +7,7 @@ from .views import (
     UserCreate,
     UserDetail,
     RespondentCreate,
+    UpdateProfile,
 )
 
 
@@ -18,5 +19,6 @@ urlpatterns = [
     path('auth/users/', UserCreate.as_view()),
     path('auth/users/me/', UserDetail.as_view()),
     path('auth/users/respondents/', RespondentCreate.as_view()),
+    path('auth/users/profile/<int:pk>/', UpdateProfile.as_view()),
 
 ]
