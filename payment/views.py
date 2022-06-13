@@ -84,10 +84,9 @@ class Notify(APIView):
     def post(self, request, format=None):
         print(request.data)
         transaction = Transaction.objects.get(uuid=request.data['transaction_uuid'])
-        if request.data['status'] == "Completed":
-            transaction.status = "Completed"
-            transaction.save()
-            user = User.objects.get(username=transaction.user.username)
-            user.balance += transaction.amount
-            user.save()
+        transaction.status = "Completed"
+        transaction.save()
+        user = User.objects.get(username=transaction.user.username)
+        user.balance += transaction.amount
+        user.save()
         return Response(request.data, status=status.HTTP_200_OK)
