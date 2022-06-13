@@ -9,7 +9,7 @@ from .models import Transaction
 from access.models import User
 from rest_framework.permissions import IsAuthenticated
 
-URL = "http://localhost:8000/"
+URL = "http://167.172.141.137/"
 
 WALLET_APP_KEY = "PG_test_7aa29079-8567-4346-afb1-07c53dc4c623"
 
