@@ -98,3 +98,8 @@ class Notify(APIView):
 class Success(APIView):
     def get(self, request, format=None):
         return HttpResponseRedirect("http://localhost:4200/researcher/dashboard/")
+
+
+class Cancel(APIView):
+    def get(self, request, format=None):
+        return HttpResponseRedirect("http://localhost:4200/researcher/deposite/")
