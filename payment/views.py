@@ -71,7 +71,10 @@ class Withdraw(APIView):
             payment_gateway = PaymentGatewayClient(WALLET_APP_KEY)
             if request.user.balance == 0:
                 return Response("You have no balance", status=status.HTTP_400_BAD_REQUEST)
-            transfer = payment_gateway.transfer(serializer.validated_data['phone_number'], request.user.balance, "Withdraw")
+            balance = request.user.balance
+            if request.user.roll.roll_name == 'Respondent':
+                balance = round(request.user.balance*0.95, 2)
+            transfer = payment_gateway.transfer(serializer.validated_data['phone_number'], balance, "Withdraw")
             if transfer.status != 200:
                 return Response(str(transfer.body), status=status.HTTP_400_BAD_REQUEST)
             print(transfer.body)
@@ -90,3 +93,8 @@ class Notify(APIView):
         user.balance += transaction.amount
         user.save()
         return Response(request.data, status=status.HTTP_200_OK)
+
+
+class Success(APIView):
+    def get(self, request, format=None):
+        return HttpResponseRedirect("http://localhost:4200/researcher/dashboard/")
